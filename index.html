@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet/less" type="text/css" href="styles.less" />
+    <script src="https://cdn.jsdelivr.net/npm/less@4"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <embed src='./fj.mp3' width='100' height='50'  loop="true" autostart="true">
+    <script></script>
+    <title>飞机大战</title>
+</head>
+
+<body>
+    <div class="game">
+        <!-- 开始游戏页面 -->
+        <div class="startGame">
+            <div>
+                <button class="start">开始游戏</button>
+                <button class="list">排行榜</button>
+            </div>
+        </div>
+        <!-- 进入游戏页面 -->
+        <div class="enterGame">
+
+            <p>击杀数:
+            <div class="killNum">
+            </div>
+            </p>
+            <p>总分数:
+            <div class="score"></div>
+            </p>
+
+            <img class="myplane" src="./images//myplane.gif" alt="">
+        </div>
+        <!-- 暂停游戏界面 -->
+        <div class="stopGame">
+            <h1>暂停游戏</h1>
+            <div>
+                <button class="Scontinue">继续游戏</button>
+                <button class="start">重新开始</button>
+                <button class="back">返回首页</button>
+            </div>
+        </div>
+        <!-- 游戏结束页面 -->
+        <div class="overGame">
+            <h1>game over</h1>
+            <div>
+                <button class="start">重新开始</button>
+                <button class="back">返回首页</button>
+                <button class="list">排行榜</button>
+            </div>
+        </div>
+        <!-- 排行榜页面 -->
+        <div class="gameList">
+            <a class="backLast" href="javascript:void(0)">返回首页</a>
+            <table border="2">
+                <thead>
+                    <tr>
+                        <th>排名</th>
+                        <th>用户名</th>
+                        <th>得分</th>
+                    </tr>
+                </thead>
+                <tbody class="renderlist">
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="./index.js"></script>
+
+    <script>
+
+        const startGame = pp('.startGame');
+        const enterGame = pp('.enterGame');
+        const stopGame = pp('.stopGame');
+        const overGame = pp('.overGame');
+        const start = pp('.start');
+        const gameList = pp('.gameList');
+        const list = pp('.list');
+        const backLast = pp('.backLast');
+        //开始游戏
+
+
+        //事件委托
+        document.addEventListener('click', e => {
+            //暂停游戏返回首页
+            if (e.target.className === 'back') {
+                tohome(enterGame, startGame);
+                tohome(stopGame, startGame);
+                tohome(overGame,startGame);
+            }
+            //排行榜返回上一级
+            if (e.target.className === 'backLast') {
+                e.defaultPrevented
+                tohome(gameList, startGame)
+            }
+            //查看排行榜点击事件
+            if (e.target.className === 'list') {
+                toList(startGame, gameList);
+                toList(overGame,gameList);
+                toList(enterGame,gameList)
+            }
+            //添加开始游戏点击事件 重新开始
+            if (e.target.className === 'start') {
+                tostartGame(startGame, enterGame);
+                toList(overGame,enterGame);
+                //开始游戏
+                restart();
+            }
+            //添加继续游戏事件
+            if (e.target.className === 'Scontinue') {
+                stopGame.style.display = 'none';
+                bullettimer = setInterval(bulletMove, bulletdelay);
+                planetimer = setInterval(enemyPlanerandom, planedelay);
+                planeSpeedtimer = setInterval(planeMove, planespeeddelay);
+            }
+            if (e.target.className === 'Sstart') {
+                stopGame.style.display = 'none';
+                // clearInterval(bullettimer);
+                //移除元素
+                //重新开始游戏
+                restart()
+            }
+        })
+
+    </script>
+
+</body>
+
+</html>
